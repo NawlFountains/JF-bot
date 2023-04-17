@@ -1,0 +1,21 @@
+{
+  "name": "discordbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.7.1",
+    "minecraft-protocol": "^1.41.2",
+    "ping": "^0.4.4",
+    "ps-node": "^0.1.6"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
