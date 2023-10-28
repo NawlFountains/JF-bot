@@ -45,9 +45,38 @@ client.on('messageCreate', async (msg) => {
           });
     } else if (msg.content.startsWith("!help")) {
         msg.reply('**!pais (monto)** para calcular los impuestos que se le aplican a una compra en peso al exterior, tanto Steam , AirBNB ,TiendaMia, etc'+
-                    '\n**!server** para conocer el estado actual del servidor de minecraft, de tardarse asumir que esta cerrado.')
+                    '\n**!server** para conocer el estado actual del servidor de minecraft, de tardarse asumir que esta cerrado.'+
+	'\n**!dolar (monto)** para conocer la ultima cotizacion del dolar oficial actual y calcular el monto a pesos que pagarias de realizar una compra con ese monto')
+    } else if (msg.content.startsWith("!dolar ")) {
+	const parFechaPrecio = await get_cotizacion_dolar()
+    	const cotizacion = parFechaPrecio[1];
+	const fechaCotizacion = parFechaPrecio[0];
+        var priceStringHolder = msg.content.split(' ');
+        var priceInUSD = parseFloat(priceStringHolder[1]);
+
+	msg.reply(`Ultima cotizacion del dia ${fechaCotizacion} de $${cotizacion} , segun **BNA**\n`+
+	'\n**Conversion** : USD $'+priceInUSD+' = $'+(priceInUSD*cotizacion).toFixed(2)+
+	'\nSi se paga algun servicio que figure con este monto al resumen de su tarjeta puede '+
+	'llegar el monto $'+(priceInUSD*cotizacion).toFixed(2)*impuestos+
+	'\n\n_No se tiene en cuenta impuestos provinciales_');
+
     }
   }
 );
+
+const axios = require('axios');
+
+async function get_cotizacion_dolar() {
+  try {
+    // Hardcoded the start date until we know how to get the latest update date
+    const url = 'https://apis.datos.gob.ar/series/api/series/?ids=168.1_T_CAMBIOR_D_0_0_26&start_date=2018-07&limit=5000';
+    const response = await axios.get(url);
+    const data = response.data;
+    return data.data[data.data.length - 1];
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
 
 client.login(token);
