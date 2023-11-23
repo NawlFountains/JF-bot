@@ -1,7 +1,7 @@
 const { Client, IntentsBitField, messageLink } = require('discord.js');
 const { token, serverIP, serverPort } = require('./config.json');
 const mcp = require('minecraft-protocol');
-const impuestos = 2.00; //30 Pais + 45 Impuesto Ganancias + unificacion
+const impuestos = 1 + 1.55; //30 Pais + 100 Impuesto Ganancias + unificacion
 //const impuestosExtras = impuestos+ 0.21; //Bienes personales 21
 const channelId = "750481919137022102"; // #jf
 
@@ -69,7 +69,7 @@ const axios = require('axios');
 async function get_cotizacion_dolar() {
   try {
     // Hardcoded the start date until we know how to get the latest update date
-    const url = 'https://apis.datos.gob.ar/series/api/series/?ids=168.1_T_CAMBIOR_D_0_0_26&start_date=2018-07&limit=5000';
+    const url = 'https://apis.datos.gob.ar/series/api/series/?ids=168.1_T_CAMBIOR_D_0_0_26&start_date=2022-07&limit=5000';
     const response = await axios.get(url);
     const data = response.data;
     return data.data[data.data.length - 1];
